@@ -1,0 +1,56 @@
+@echo off
+
+for /F "tokens=* delims=" %%i in ('reg query "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\MUI\UILanguages"') do set lang=%%i
+set langue=%lang:~68,5%
+echo Langue système: %langue%
+
+:start
+
+set /P n=Installer lecteur reseau %langue% (Y/N)?
+if %n% EQU Y goto install_default
+if %n% EQU N goto install_selection
+
+:install_default
+if %langue% EQU fr-FR goto reseau-fr
+if %langue% EQU ja-JP goto reseau-jp
+if %langue% EQU es-ES goto reseau-es
+if %langue% EQU fr-BE goto reseau-be
+if %langue% EQU en-GB goto reseau-gb
+
+:install_selection
+set /P langue=Choisir pays : (fr-FR ; ja-JP ; es-ES ; fr-BE ; en-GB)
+if %langue% EQU fr-FR goto reseau-fr
+if %langue% EQU ja-JP goto reseau-jp
+if %langue% EQU es-ES goto reseau-es
+if %langue% EQU fr-BE goto reseau-be
+if %langue% EQU en-GB goto reseau-gb
+
+
+:reseau-fr
+echo FR
+REM net use x: \\nom_ou_ip_de_l'ordinateur\nom_partage
+goto fin
+
+:reseau-jp
+echo JP
+REM net use x: \\nom_ou_ip_de_l'ordinateur\nom_partage
+goto fin
+
+:reseau-es
+echo ES
+REM net use x: \\nom_ou_ip_de_l'ordinateur\nom_partage
+goto fin
+
+:reseau-be
+echo BE
+REM net use x: \\nom_ou_ip_de_l'ordinateur\nom_partage
+goto fin
+
+:reseau-gb
+echo GB
+REM net use x: \\nom_ou_ip_de_l'ordinateur\nom_partage
+goto fin
+
+:fin
+pause
+cls
